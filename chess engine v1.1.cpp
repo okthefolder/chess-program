@@ -25,6 +25,7 @@ int computer = 0;
 int moves_made = 0;
 int selectedPieceIndex = -1;
 int turn = 2;
+float endgame_state = 0;
 
 
 
@@ -39,14 +40,14 @@ std::vector<int> visible_board = {
         0,0,0,0,0,0,0,0,
         1,1,1,1,1,1,1,1,
         2,3,4,5,6,4,3,2,
-   /* 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0,*/
+    /*10, 10, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 6, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    12, 0, 0, 0, 0, 0, 0, 0,*/
     
     0,0,  0,0,0, 0,0,0 };
 
@@ -172,7 +173,7 @@ std::vector<int> piece_evaluation_board_12{
 };
 
 std::vector<int> all_piece_evaluation{
-    0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
@@ -181,7 +182,7 @@ std::vector<int> all_piece_evaluation{
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
 
-    0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0, 0, 0,
          0, 0, 0, 0, 0, 0,0,0,
         -5,-10,-10,-5,-5,-10,-10,-5,
         -10,-5, 0,16,16, 0,-5,-10,
@@ -235,15 +236,15 @@ std::vector<int> all_piece_evaluation{
         8, 6, 4, 2, 2, 4, 6, 8,
         10, 8, 6, 4, 4, 6, 8, 10,
 
-10, 5, 0,-5,-5, 0, 5,10,
-  0,10, 6, 0, 0, 6,10, 0,
- -5, 0,12, 8, 8,12, 0,-5,
--10,-5, 0,16,16, 0,-5,-10,
- -5,-10,-10,-5,-5,-10,-10,-5,
-  0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0,
+    10, 5, 0,-5,-5, 0, 5,10,
+      0,10, 6, 0, 0, 6,10, 0,
+     -5, 0,12, 8, 8,12, 0,-5,
+    -10,-5, 0,16,16, 0,-5,-10,
+     -5,-10,-10,-5,-5,-10,-10,-5,
+      0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0,
 
-  0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
@@ -290,7 +291,172 @@ std::vector<int> all_piece_evaluation{
 
 };
 
-std::vector<int> all_piece_values = { 0,100,500,300,300,800,0,100,500,300,300,800,0};
+std::vector<int> all_piece_evaluation_endgame = {
+    //0
+            0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+
+        //1
+
+         100, 100, 100, 100, 100, 100, 100, 100,
+         50, 50, 50, 50, 50, 50,50,50,
+         30, 30, 30, 30, 30, 30,30,30,
+         10, 10, 10, 10, 10, 10,10,10,
+         5, 5, 5, 5, 5, 5,5,5,
+         1, 1, 1, 1, 1, 1,1,1,
+         0, 0, 0, 0, 0, 0,0,0,
+         0, 0, 0, 0, 0, 0, 0, 0,
+
+         //2
+
+         0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+
+        //3
+
+        -15, -10, -10, -10, -10, -10, -10, -15,
+        -10, -1, 0, 0, 0, 0, -1, -10,
+        -10, 0, 3, 5, 5, 3, 0, -10,
+        -10, 0, 5, 8, 8, 5, 0, -10,
+        -10, 0, 5, 10, 10, 5, 0, -10,
+        -10, 0, 3, 5, 5, 3, 0, -10,
+        -10, -1, 0, 0, 0, 0, -1, -10,
+        -15, -10, -10, -10, -10, -10, -10, -15,
+
+        //4
+
+        -15, -10, -10, -10, -10, -10, -10, -15,
+        -10, -1, 0, 0, 0, 0, -1, -10,
+        -10, 0, 3, 5, 5, 3, 0, -10,
+        -10, 0, 5, 10, 10, 5, 0, -10,
+        -10, 0, 5, 10, 10, 5, 0, -10,
+        -10, 0, 3, 5, 5, 3, 0, -10,
+        -10, -1, 0, 0, 0, 0, -1, -10,
+        -15, -10, -10, -10, -10, -10, -10, -15,
+
+        //5
+
+        -5, -3, 0, 0, 0, 0, -3, -5,
+        -3, 0, 0, 0, 0, 0, 0, -3,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        -3, 0, 0, 0, 0, 0, 0, -3,
+        -5, -3, 0, 0, 0, 0, -3, -5,
+
+        //6
+
+        -200, -100, -50, -30, -30, -50, -100, -200,
+        -100, -50, -30, -10, -10, -30, -50, -100,
+        -50, -30, 3, 5, 5, 3, -30, -50,
+        -30, -10, 5, 10, 10, 5, -10, -30,
+        -30, -10, 5, 10, 10, 5, -10, -30,
+        -50, -30, 3, 5, 5, 3, -30, -50,
+        -100, -50, -30, -10, -10, -30, -50, -100,
+        -200, -100, -50, -30, -30, -50, -100, -200,
+
+        //7
+
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        1, 1, 1, 1, 1, 1, 1, 1,
+        5, 5, 5, 5, 5, 5, 5, 5,
+        10, 10, 10, 10, 10, 10, 10, 10,
+        30, 30, 30, 30, 30, 30, 30, 30,
+        50, 50, 50, 50, 50, 50, 50, 50,
+        100, 100, 100, 100, 100, 100, 100, 100,
+
+
+    //8
+
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+
+    //9
+
+        -15, -10, -10, -10, -10, -10, -10, -15,
+        -10, -1, 0, 0, 0, 0, -1, -10,
+        -10, 0, 3, 5, 5, 3, 0, -10,
+        -10, 0, 5, 10, 10, 5, 0, -10,
+        -10, 0, 5, 8, 8, 5, 0, -10,
+        -10, 0, 3, 5, 5, 3, 0, -10,
+        -10, -1, 0, 0, 0, 0, -1, -10,
+        -15, -10, -10, -10, -10, -10, -10, -15,
+
+            //10
+
+        -15, -10, -10, -10, -10, -10, -10, -15,
+        -10, -1, 0, 0, 0, 0, -1, -10,
+        -10, 0, 3, 5, 5, 3, 0, -10,
+        -10, 0, 5, 10, 10, 5, 0, -10,
+        -10, 0, 5, 10, 10, 5, 0, -10,
+        -10, 0, 3, 5, 5, 3, 0, -10,
+        -10, -1, 0, 0, 0, 0, -1, -10,
+        -15, -10, -10, -10, -10, -10, -10, -15,
+
+             //11
+
+        -5, -3, 0, 0, 0, 0, -3, -5,
+        -3, 0, 0, 0, 0, 0, 0, -3,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        -3, 0, 0, 0, 0, 0, 0, -3,
+        -5, -3, 0, 0, 0, 0, -3, -5,
+
+            //12
+
+            -15, -10, -10, -10, -10, -10, -10, -15,
+            -10, -1, 0, 0, 0, 0, -1, -10,
+            -10, 0, 3, 5, 5, 3, 0, -10,
+            -10, 0, 5, 10, 10, 5, 0, -10,
+            -10, 0, 5, 10, 10, 5, 0, -10,
+            -10, 0, 3, 5, 5, 3, 0, -10,
+            -10, -1, 0, 0, 0, 0, -1, -10,
+            -15, -10, -10, -10, -10, -10, -10, -15
+};
+
+std::vector<int> all_piece_values = { 0,100,500,300,300,900,0,100,500,300,300,900,0};
+
+void calculateEndgameState(std::vector<int> board,int turn) {
+    endgame_state = 1;
+    for (int i = 0;i < 64;++i) {
+        if (board[i] != 0){
+            
+            if (board[i] < 7) {
+                if (turn == 3) {
+                    endgame_state -= static_cast<float>(all_piece_values[board[i]]) / 3900;
+                }
+            }
+            else {
+                if(turn==2){
+                    endgame_state -= static_cast<float> (all_piece_values[board[i]]) / 3900;
+                }
+            }
+        }
+    }
+    //std::cout << endgame_state << std::endl;
+}
 
 
 std::vector<int> black_and_white_pieces_into_list(std::vector<int> board)
@@ -541,7 +707,7 @@ std::vector<int> rook_move(int n, std::vector<int>& board, std::vector<int> colo
             break;
         }
     }
-    for (int i = 1;i <= n % 8+1;++i) {
+    for (int i = 1;i < n % 8+1;++i) {
         if (color_board[n - i] == 1) {
             captures.push_back(n - i);
         }
@@ -1548,8 +1714,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             //InvalidateRect(hwnd, nullptr, TRUE);
             moves_made = 0;
            // while (true) {
-           while (mdepth < 6) {
-           //while (std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time).count() < 1){
+           //while (mdepth < 6) {
+           while (std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time).count() < 2){
                     //start_time = std::chrono::steady_clock::now();
                     mdepth += 1;
                     move_to_make = finding_best_move(visible_board, turn, mdepth, move_to_make);
@@ -1575,24 +1741,30 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 
 int evaluate(std::vector<int>& board) {
     moves_made += 1;
-    int evaluation = 0;
-    //std::vector<int> color_board = black_and_white_pieces_into_list(board);
-    //int piece;
+    float evaluation = 0;
+    //int blackKingIndex;
+    //int whiteKingIndex;
     for (int i = 0;i < 64;i++) {
-        //piece = board[i];
-        //std::cout << board.size() << std::endl;
         if (board[i]==0){
+            continue;
         }
         else if (board[i] < 7) {
-            evaluation += all_piece_evaluation[64 * board[i] + i];
+            //if (board[i]==12){
+            //    blackKingIndex = i;
+            //}
+            evaluation += (static_cast<float>(all_piece_evaluation[64 * board[i] + i])*(1-endgame_state)+ static_cast<float>(all_piece_evaluation_endgame[64 * board[i] + i])*endgame_state);
             evaluation += all_piece_values[board[i]];
         }
         else {
-            evaluation -= all_piece_evaluation[64 * board[i] + i];
+            //if (board[i] == 6) {
+            //    whiteKingIndex = i;
+            //}
+            evaluation -= (static_cast<float>(all_piece_evaluation[64 * board[i] + i]) * (1 - endgame_state) + static_cast<float>(all_piece_evaluation_endgame[64 * board[i] + i]) * endgame_state);
             evaluation -= all_piece_values[board[i]];
         }
     }
-    return evaluation;
+    //evaluation -= (endgame_state) * 10 * (abs(whiteKingIndex % 8 - blackKingIndex % 8) + abs(whiteKingIndex / 8 - blackKingIndex / 8));
+    return static_cast<int>(evaluation);
 }
 
 std::vector<int> make_move(std::vector<int>& board, int selectedPieceIndex, int clickedPieceIndex) {
@@ -1700,7 +1872,12 @@ std::vector<std::tuple<int, int, int>> creating_ordered_moves(std::vector<int> b
             }
             std::vector<int> possible_moves_for_a_piece = move(i, board,color_board, 0, turn);
             for (int j = 1;j < possible_moves_for_a_piece.size();j++) {
-                move_importance += all_piece_evaluation[64 * board[i] + possible_moves_for_a_piece[j]] - all_piece_evaluation[64 * board[i] + i];
+                if (endgame_state > 0.4) {
+                    move_importance += all_piece_evaluation[64 * board[i] + possible_moves_for_a_piece[j]] - all_piece_evaluation[64 * board[i] + i];
+                }
+                else {
+                    move_importance += (static_cast<float>(all_piece_evaluation[64 * board[i] + possible_moves_for_a_piece[j]]) * (1 - endgame_state) + static_cast<float>(all_piece_evaluation_endgame[64 * board[i] + possible_moves_for_a_piece[j]]) * endgame_state) - possible_moves_for_a_piece[j];
+                }
                 if (board[possible_moves_for_a_piece[j]] != 0) {
                     move_importance += (10 * all_piece_values[board[possible_moves_for_a_piece[j]]]) - all_piece_values[board[i]];
                 }
@@ -2082,6 +2259,32 @@ int search(std::vector<int>& board, int turn, int depth, int starting_depth, int
         //return only_captures_search(board, turn,0,best_e);
     }
     std::vector<std::tuple<int, int, int>> all_possible_moves = creating_ordered_moves(board, turn);
+    if (all_possible_moves.size()==0) {
+        std::vector<int> color_board = black_and_white_pieces_into_list(board);
+        int king_index = -1;
+        if (turn == 2) {
+            for (int i = 0;i < 64;++i) {
+                if (board[i] == 6) {
+                    king_index = i;
+                    break;
+                }
+            }
+        }
+        else {
+            for (int i = 0;i < 64;++i) {
+                if (board[i] == 12) {
+                    king_index = i;
+                    break;
+                }
+            }
+        }
+        if (false == checking_need_for_deletion(board, color_board, king_index, king_index, turn)) {
+            return best_e;
+        }
+        else {
+            return 0;
+        }
+    }
     std::vector<int> saved_board = board;
     //std::vector<int> evaluations = {};
     int e;
@@ -2120,9 +2323,11 @@ int search(std::vector<int>& board, int turn, int depth, int starting_depth, int
 }
 
 std::tuple<int,int> finding_best_move(std::vector<int>board, int turn, int depth, std::tuple<int,int> previous_best_move) {
+    calculateEndgameState(board, turn);
+    //std::cout<<"endgame state " << endgame_state << std::endl;
     //std::cout << turn << " turn" << std::endl;
     std::vector<std::tuple<int, int, int>> all_possible_moves = creating_ordered_moves(board, turn);
-    for (std::tuple<int, int, int> vec : all_possible_moves) {
+    /*for (std::tuple<int, int, int> vec : all_possible_moves) {
         if (board[std::get<1>(vec)] < 7) {
             std::cout << board[std::get<1>(vec)]<<"   "<< std::get<1>(vec) << " " << std::get<2>(vec) << std::endl;
             for (int y = 0;y < 8;y++) {
@@ -2132,11 +2337,12 @@ std::tuple<int,int> finding_best_move(std::vector<int>board, int turn, int depth
                 std::cout << " " << std::endl;
             }
         }
-    }
+    }*/
     
     if (std::get<0>(previous_best_move) != -1) {
         all_possible_moves.insert(all_possible_moves.begin(), (std::make_tuple(0, std::get<0>(previous_best_move), std::get<1>(previous_best_move))));
     }
+    
     std::vector<int> saved_board = board;
     std::vector<int> evaluations = {};
     int best_e = 10000000000;
@@ -2155,7 +2361,37 @@ std::tuple<int,int> finding_best_move(std::vector<int>board, int turn, int depth
                 move_to_make = std::make_tuple(std::get<1>(vec), std::get<2>(vec));
             }   
         }
+        
+
+    /*
+    std::vector<int> saved_board = board;
+    //std::vector<int> evaluations = {};
+    int best_e = 10000000000;
+    std::tuple<int, int> move_to_make = std::make_tuple(0, 0);
+    if (all_possible_moves.size() == 0) {
+        std::cout << "game ended";
+    }
+    int e;
+#pragma omp parallel
+    {
+#pragma omp for
+        for (int i=0;i < all_possible_moves.size();++i)
+        {
+            std::vector<int> pboard = board;
+            std::vector<int> psaved_board = pboard;
+            std::tuple<int, int, int> vec = all_possible_moves[i];
+            pboard = make_move(pboard, std::get<1>(vec), std::get<2>(vec));
+            e = search(pboard, 3 - turn % 2, depth - 1, depth, best_e);
+            pboard = psaved_board;
+            if (e < best_e) {
+                best_e = e;
+                move_to_make = std::make_tuple(std::get<1>(vec), std::get<2>(vec));
+            }
+        }
+    }
+    */
     return move_to_make;
+
 }
 int main()
 {

@@ -7,7 +7,7 @@
 #include <string>
 #include <sstream>
 #include <cstring>
-#include <algorithm> // for std::remove_if
+#include <algorithm>
 #include <limits>
 #include <tuple>
 #include <thread>
@@ -37,7 +37,7 @@ int visible_board[72] = {
         0,0,0,0,0,0,0,0,
         1,1,1,1,1,1,1,1,
         2,3,4,5,6,4,3,2,
-   /* 8, 0, 0, 0, 0, 0, 0, 0,
+    /*8, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,
@@ -169,7 +169,9 @@ std::vector<int> piece_evaluation_board_12{
         -4, -6, -8, -10, -10, -8, -6, -4,
 };
 
-std::vector<int> all_piece_evaluation{
+int all_piece_evaluation[64*13]{
+
+    //0
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
@@ -179,6 +181,7 @@ std::vector<int> all_piece_evaluation{
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
 
+        //1
          0, 0, 0, 0, 0, 0, 0, 0,
          0, 0, 0, 0, 0, 0,0,0,
         -5,-10,-10,-5,-5,-10,-10,-5,
@@ -188,6 +191,7 @@ std::vector<int> all_piece_evaluation{
          10, 5, 0, -5, -5, 0, 5, 10,
          0, 0, 0, 0, 0, 0, 0, 0,
 
+         //2
          0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
@@ -197,6 +201,7 @@ std::vector<int> all_piece_evaluation{
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
 
+        //3
         -15, -10, -10, -10, -10, -10, -10, -15,
         -10, -1, 0, 0, 0, 0, -1, -10,
         -10, 0, 3, 5, 5, 3, 0, -10,
@@ -206,6 +211,7 @@ std::vector<int> all_piece_evaluation{
         -10, -1, 0, 0, 0, 0, -1, -10,
         -15, -10, -10, -10, -10, -10, -10, -15,
 
+        //4
         -15, -10, -10, -10, -10, -10, -10, -15,
         -10, -1, 0, 0, 0, 0, -1, -10,
         -10, 0, 3, 5, 5, 3, 0, -10,
@@ -215,6 +221,8 @@ std::vector<int> all_piece_evaluation{
         -10, -1, 0, 0, 0, 0, -1, -10,
         -15, -10, -10, -10, -10, -10, -10, -15,
 
+
+        //5
         -5, -3, 0, 0, 0, 0, -3, -5,
         -3, 0, 0, 0, 0, 0, 0, -3,
         0, 0, 0, 0, 0, 0, 0, 0,
@@ -224,6 +232,8 @@ std::vector<int> all_piece_evaluation{
         -3, 0, 0, 0, 0, 0, 0, -3,
         -5, -3, 0, 0, 0, 0, -3, -5,
 
+
+        //6
         -4, -6, -8, -10, -10, -8, -6, -4,
         -2, -4, -6, -8, -8, -6, -4, -2,
         0, -2, -4, -6, -6, -4, 0, 0,
@@ -233,6 +243,8 @@ std::vector<int> all_piece_evaluation{
         8, 6, 4, 2, 2, 4, 6, 8,
         10, 8, 6, 4, 4, 6, 8, 10,
 
+
+        //7
     10, 5, 0,-5,-5, 0, 5,10,
       0,10, 6, 0, 0, 6,10, 0,
      -5, 0,12, 8, 8,12, 0,-5,
@@ -241,6 +253,8 @@ std::vector<int> all_piece_evaluation{
       0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
 
+
+      //8
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
@@ -250,6 +264,8 @@ std::vector<int> all_piece_evaluation{
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
 
+
+        //9
         -15, -10, -10, -10, -10, -10, -10, -15,
         -10, -1, 0, 0, 0, 0, -1, -10,
         -10, 0, 3, 5, 5, 3, 0, -10,
@@ -259,6 +275,8 @@ std::vector<int> all_piece_evaluation{
         -10, -1, 0, 0, 0, 0, -1, -10,
         -15, -10, -10, -10, -10, -10, -10, -15,
 
+
+         //10
         -15, -10, -10, -10, -10, -10, -10, -15,
         -10, -1, 0, 0, 0, 0, -1, -10,
         -10, 0, 3, 5, 5, 3, 0, -10,
@@ -268,6 +286,8 @@ std::vector<int> all_piece_evaluation{
         -10, -1, 0, 0, 0, 0, -1, -10,
         -15, -10, -10, -10, -10, -10, -10, -15,
 
+
+         //11
         -5, -3, 0, 0, 0, 0, -3, -5,
         -3, 0, 0, 0, 0, 0, 0, -3,
         0, 0, 0, 0, 0, 0, 0, 0,
@@ -277,6 +297,8 @@ std::vector<int> all_piece_evaluation{
         -3, 0, 0, 0, 0, 0, 0, -3,
         -5, -3, 0, 0, 0, 0, -3, -5,
 
+
+        //12
         10, 8, 6, 4, 4, 6, 8, 10,
         8, 6, 4, 2, 2, 4, 6, 8,
         6, 4, 2, 0, 0, 2, 4, 6,
@@ -288,7 +310,7 @@ std::vector<int> all_piece_evaluation{
 
 };
 
-std::vector<int> all_piece_evaluation_endgame = {
+int all_piece_evaluation_endgame[64*13] = {
     //0
             0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
@@ -433,7 +455,7 @@ std::vector<int> all_piece_evaluation_endgame = {
             -15, -10, -10, -10, -10, -10, -10, -15
 };
 
-std::vector<int> all_piece_values = { 0,100,500,300,300,900,0,100,500,300,300,900,0};
+int all_piece_values[13] = { 0,100,500,300,300,900,0,100,500,300,300,900,0};
 
 void calculateEndgameState(int board[],int turn) {
     endgame_state = 1;
@@ -476,39 +498,6 @@ int* black_and_white_pieces_into_list(int board[])
     //std::cout << R << std::endl;
     return R;
 }
-/*
-std::vector<int> straigth_paths(int n, int x, int y, std::vector<int>& board)
-{
-    int k = 0;
-    std::vector<int> possible_moves = {};
-    const int start_x = (n % 8);
-    const int start_y = ((n / 8));
-    std::vector<int> color_board = black_and_white_pieces_into_list(board);
-    for (int i = 1; i < 8; ++i) {
-
-        k = color_board[n];
-        if (n + i * x + 8 * i * y < 64 && n + i * x + 8 * i * y >= 0) {
-            k = color_board[n + i * x + 8 * i * y];
-        }
-
-        if (k != color_board[n] && -1 < start_x + i * x && start_x + i * x < 8 && -1 < start_y + i * y && start_y + i * y < 8) {
-            if (k == 1) {
-                possible_moves.push_back(n + i * x + y * 8 * i);
-            }
-            else {
-                possible_moves.push_back(n + i * x + y * 8 * i);
-                break;
-            }
-        }
-        else {
-            break;
-        }
-    }
-
-    return possible_moves;
-}
-*/
-
 
 std::vector<int> queen_move(int n, int board[], int color_board[])
 {
@@ -620,31 +609,6 @@ std::vector<int> queen_move(int n, int board[], int color_board[])
 
 std::vector<int> rook_move(int n, int board[], int color_board[])
 {
-    /*
-    std::vector<int> possible_moves = {};
-    //1
-    std::vector<int>diagonal = straigth_paths(n, 0, 1, board);
-    for (int num : diagonal) {
-        possible_moves.push_back(num);
-    }
-    //2
-    diagonal = straigth_paths(n, 0, -1, board);
-    for (int num : diagonal) {
-        possible_moves.push_back(num);
-    }
-    //3
-    diagonal = straigth_paths(n, -1, 0, board);
-    for (int num : diagonal) {
-        possible_moves.push_back(num);
-    }
-    //4
-    diagonal = straigth_paths(n, 1, 0, board);
-    for (int num : diagonal) {
-        possible_moves.push_back(num);
-    }
-    return possible_moves;
-}*/
-    //std::vector<int> color_board = black_and_white_pieces_into_list(board);
     int  opponent_color = 3 - color_board[n] % 2;
     std::vector<int> captures = {};
     for (int i = 1;i < 8 - n % 8;++i) {
@@ -785,9 +749,11 @@ std::vector<int> bishop_move(int n, int board[], int color_board[])
 
 std::vector<int> knight_move(int n, int board[], int color_board[]) {
     int  opponent_color = 3 - color_board[n]%2;
-    std::vector<int> possible_captures = { n + 10,n + 6,n + 17,n + 15,n - 6,n - 10,n - 17,n - 15 };
+    int possible_captures[] = { 10,6,17,15,-6,-10,-17,-15 };
     std::vector<int> captures = {};
-    for (int vec : possible_captures) {
+    //int vec;
+    for (int kvec : possible_captures) {
+       int vec = kvec + n;
         if (abs(n % 8 - vec % 8) < 3 && vec < 64 && vec >= 0&&color_board[vec]!= color_board[n]) {
             captures.push_back(vec);
         }
@@ -1089,6 +1055,7 @@ bool checking_need_for_deletion(int board[], int color_board[], int king_index, 
     }
     //std::vector<int> horse_positions= { king_index + 10,king_index + 6,king_index + 17,king_index + 15,king_index - 6,king_index - 10,king_index - 17,king_index - 15 };
     const int horse_positions[] = { 10, 6, 17, 15, -6, -10, -17, -15 };
+
     for (int hmov : horse_positions) {
         int mov = king_index + hmov;
         if (mov<64 && mov>-1) {
@@ -1217,138 +1184,9 @@ std::vector<int> move(int n, int board[72], int color_board[72], int care_about_
         //}
     }
     
-    possible_moves.insert(possible_moves.begin(), n);
-    for (int vec : possible_moves) {
-        if (vec < 0) {
-            std::cout << vec << "    " << board[n] << "   " << n << std::endl;
-            for (int y = 0;y < 8;y++) {
-                for (int x = 0;x < 8;x++) {
-                    std::cout << board[x + 8 * y] << " ";
-                }
-                std::cout << " " << std::endl;
-            }
-        }
-    }
+    //possible_moves.insert(possible_moves.begin(), n);
     return possible_moves;
 }
-
-/*std::vector<int> check_if_move_is_legal(int n, std::vector<int> possible_moves, std::vector<int>& board, int turn) {
-    int king_index = -1;
-    if (turn == 2) {
-        for (int i = 0;i < 64;i++) {
-            if (board[i] == 6) {
-                king_index = i;
-                break;
-            }
-        }
-    }
-    else {
-        for (int i = 0;i < 64;i++) {
-            if (board[i] == 12) {
-                king_index = i;
-                break;
-            }
-        }
-    }
-    if (king_index == -1) {
-        std::cout << "KING EEEEEEEEERRRRRRRRRRROOOOOOOOOOORRRRRRRRRRR" << std::endl;
-        for (int y = 0;y < 8;y++) {
-            for (int x = 0;x< 8;x++) {
-                std::cout << board[x + 8 * y] << " ";
-            }
-            std::cout << " " << std::endl;
-        }
-    }
-
-
-    std::vector<int> color_board = black_and_white_pieces_into_list(board);
-    //std::vector<int> possible_move = { king_index };
-    std::vector<int> checks = {};
-    int u = 0;
-    //int testvariable = 0;
-    const int movesize = possible_moves.size();
-    for (int mov = 0; mov < movesize;mov++) {
-        //std::cout <<possible_moves[mov-u]<<" " << mov - u << " " << possible_moves.size() - 1 << std::endl;
-        int piece = board[n];
-        int frompiece = board[possible_moves[mov - u]];
-        int en_passant_test = 0;
-        if ((board[board[65]] == 1 || board[board[65]] == 7) && (abs(board[65] - board[64]) == 16) && abs(n - board[65]) == 1) {
-            //if (abs(n - board[65]) == 1) {
-                board[board[65]] = 0;
-                board[n] = 0;
-                board[possible_moves[mov - u]] = piece;
-                en_passant_test = 1;
-        }
-        else {
-            board[n] = 0;
-            board[possible_moves[mov - u]] = piece;
-            if (piece == 9) {
-            }
-        }
-        if (piece == 6 || piece == 12) {
-            king_index = possible_moves[mov - u];
-        }    
-        std::vector<int>colored_board = black_and_white_pieces_into_list(board);
-        int stop_del = 0;
-        std::vector<int> check_squares = check_moves(board, 3-turn%2, king_index);
-        //std::cout << "KING_index "<<king_index << std::endl;
-        for (int movv : check_squares) {
-            if (movv == king_index) {
-                stop_del = 1;
-                break;
-            }
-        }
-        if (king_index == 22) {
-            //std::cout << "KING_INDEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" << std::endl;
-        }
-        //std::cout << king_index << std::endl;
-
-        if (en_passant_test == 1) {
-            board[n] = piece;
-            board[possible_moves[mov - u]] = 0;
-            if (piece == 1) {
-                board[board[65]] = 7;
-            }
-            else {
-                board[board[65]] = 1;
-            }
-
-
-        }
-        else {
-            board[n] = piece;
-            board[possible_moves[mov - u]] = frompiece;
-        }
-        checks = {};
-        //testvariable += 1;
-        
-        if (stop_del == 1) {
-            possible_moves.erase(possible_moves.begin() + (mov - u));
-            u = u + 1;
-            
-        }
-        
-    }
-    return possible_moves;
-}*/
-
-
-/*std::list<std::vector<int>> listing_all_possible_moves(int turn, std::vector<int> board, int care_about_checks) {
-    std::vector<int> color_board = black_and_white_pieces_into_list(board);
-    std::list<std::vector<int>> all_possible_moves;
-    //auto start_time = std::chrono::high_resolution_clock::now();
-    for (int i = 0;i < 64;i++) {
-        if (turn == color_board[i]) {
-            all_possible_moves.push_back(move(i, board, care_about_checks,turn));
-        }
-
-    }
-    //auto end_time = std::chrono::high_resolution_clock::now();
-    //auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
-    //std::cout << duration.count() << std::endl;
-
-    return all_possible_moves;
-}*/
 
 void DrawChessboard(HDC hdc, int boardSize, int squareSize) {
     // Set initial position
@@ -1376,7 +1214,7 @@ void DrawChessboard(HDC hdc, int boardSize, int squareSize) {
             HBRUSH hBrush = CreateSolidBrush(color);
             FillRect(hdc, &squareRect, hBrush);
             DeleteObject(hBrush);
-            int piece = visible_board[row * boardSize + col];
+            int piece = visible_board[(row * boardSize + col)];
             if (piece != 0) {
                 // Adjust the text color and size as needed
                 SetTextColor(hdc, RGB(255, 0, 0));  // Red color for the piece
@@ -1456,7 +1294,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
         else {
             int* color_board = black_and_white_pieces_into_list(visible_board);
             std::vector<int> k = move(selectedPieceIndex, visible_board,color_board, 0, turn);
-            for (int i = 1; i < static_cast<int>(k.size());i++) {
+            for (int i = 0; i < static_cast<int>(k.size());i++) {
                 if (k[i] == clickedPieceIndex) {
                     make_move(visible_board, selectedPieceIndex, clickedPieceIndex);
                     selectedPieceIndex = -1;
@@ -1519,14 +1357,15 @@ int evaluate(int board[]) {
             //if (board[i]==12){
             //    blackKingIndex = i;
             //}
-            evaluation += (static_cast<float>(all_piece_evaluation[64 * board[i] + i])*(1-endgame_state)+ static_cast<float>(all_piece_evaluation_endgame[64 * board[i] + i])*endgame_state);
+           // evaluation += (static_cast<float>(all_piece_evaluation[64 * board[i] + i])*(1-endgame_state)+ static_cast<float>(all_piece_evaluation_endgame[64 * board[i] + i])*endgame_state);
+            evaluation += ((all_piece_evaluation[64 * board[i] + i]) * (1 - endgame_state) + (all_piece_evaluation_endgame[64 * board[i] + i]) * endgame_state);
             evaluation += all_piece_values[board[i]];
         }
         else {
             //if (board[i] == 6) {
             //    whiteKingIndex = i;
             //}
-            evaluation -= (static_cast<float>(all_piece_evaluation[64 * board[i] + i]) * (1 - endgame_state) + static_cast<float>(all_piece_evaluation_endgame[64 * board[i] + i]) * endgame_state);
+            evaluation -= ((all_piece_evaluation[64 * board[i] + i]) * (1 - endgame_state) + (all_piece_evaluation_endgame[64 * board[i] + i]) * endgame_state);
             evaluation -= all_piece_values[board[i]];
         }
     }
@@ -1642,13 +1481,8 @@ std::vector<std::tuple<int, int, int>> creating_ordered_moves(int board[], int t
                 }
             }
             std::vector<int> possible_moves_for_a_piece = move(i, board,color_board, 0, turn);
-            for (int j = 1;j < possible_moves_for_a_piece.size();j++) {
-                if (endgame_state > 0.4) {
-                    move_importance += all_piece_evaluation[64 * board[i] + possible_moves_for_a_piece[j]] - all_piece_evaluation[64 * board[i] + i];
-                }
-                else {
-                    move_importance += (static_cast<float>(all_piece_evaluation[64 * board[i] + possible_moves_for_a_piece[j]]) * (1 - endgame_state) + static_cast<float>(all_piece_evaluation_endgame[64 * board[i] + possible_moves_for_a_piece[j]]) * endgame_state) - possible_moves_for_a_piece[j];
-                }
+            for (int j = 0;j < possible_moves_for_a_piece.size();j++) {
+                move_importance += all_piece_evaluation[64 * board[i] + possible_moves_for_a_piece[j]] - all_piece_evaluation[64 * board[i] + i];
                 if (board[possible_moves_for_a_piece[j]] != 0) {
                     move_importance += (10 * all_piece_values[board[possible_moves_for_a_piece[j]]]) - all_piece_values[board[i]];
                 }
@@ -2087,12 +1921,14 @@ int search(int board[], int turn, int depth, int starting_depth, int alpha, int 
 
     for (std::tuple<int, int, int> vec : all_possible_moves) {
         make_move(board, std::get<1>(vec), std::get<2>(vec));
-        if (turn == 2) {
+        /*if (turn == 2) {
             e = search(board, 3 - turn % 2, depth - 1, starting_depth, best_e, evaluate(board), aspiration_window_for_black);
         }
         else {
             e = search(board, 3 - turn % 2, depth - 1, starting_depth, best_e, aspiration_window_for_white, evaluate(board));
         }
+        */
+        e = search(board, 3 - turn % 2, depth - 1, starting_depth, best_e, 0, 0);
         for (int i = 0; i < 72; ++i) {
             board[i] = saved_board[i];
         }
